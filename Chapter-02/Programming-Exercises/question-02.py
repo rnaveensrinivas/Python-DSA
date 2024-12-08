@@ -1,32 +1,32 @@
-# Devise an experiment to verify that get item and set item are O(1) for dictionaries.
+# Devise an experiment to verify that get item and set item are O(1) 
+# for dictionaries.
 from timeit import Timer
 import random
 
-print("Size\t\tTime [Get]\tTime [Set]")
-for i in range(10_000_000, 100_000_001, 10_000_000):
+NUMBER_OF_EXEC=1_000
+print("Size\t\tGet (Secs)\tSet (Secs)")
+for i in range(1_000_000, 10_000_001, 1_000_000):
     a_dict = {j: None for j in range(i)}
     
     t_get = Timer("a_dict[random.randrange(%d)]"%i, 
                   "from __main__ import random, a_dict")
-    t_set = Timer("a_dict[random.randrange(%d)] = 8"%i, 
+    t_set = Timer("a_dict[random.randrange(%d)] = -1"%i, 
                   "from __main__ import random, a_dict")
     
-    print("%d\t%0.8f\t%0.8f"%(i,
-                              t_get.timeit(number=1000), 
-                              t_set.timeit(number=1000)))
+    print("%d\t\t%2.10f\t%2.10f"%(i,
+                                t_get.timeit(number=NUMBER_OF_EXEC), 
+                                t_set.timeit(number=NUMBER_OF_EXEC)))
 
 output = """
-Size            Time [Get]      Time [Set]
-10000000        0.00096930      0.00095580
-20000000        0.00137230      0.00117900
-30000000        0.00128200      0.00116860
-40000000        0.00140270      0.00137060
-50000000        0.00791560      0.00600140
-60000000        0.00779850      0.00602800
-70000000        0.01679080      0.01593040
-80000000        0.02147660      0.01877770
-90000000        0.12573570      0.10824190
-100000000       0.17229280      0.11840070
-
-This is not bad, since we are dealing with dictionary of size 100M.
+Size            Get (Secs)      Set (Secs)
+1000000         0.0019440370    0.0017559590
+2000000         0.0021702500    0.0021020970
+3000000         0.0021878500    0.0018188530
+4000000         0.0016204320    0.0014772490
+5000000         0.0016972440    0.0015448730
+6000000         0.0017174620    0.0015337510
+7000000         0.0027063000    0.0016491610
+8000000         0.0016761800    0.0015647790
+9000000         0.0018029620    0.0017256300
+10000000        0.0018329270    0.0016770090
 """

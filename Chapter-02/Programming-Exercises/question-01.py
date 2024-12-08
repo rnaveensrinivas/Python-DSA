@@ -1,23 +1,25 @@
 # Devise an experiment to verify that the list index operator is O(1).
 from timeit import Timer
 import random
+NUMBER_OF_EXEC=1_000
 
-print("Size\t\tTime")
-for i in range(10_000_000, 100_000_001, 10_000_000):
-    a_list = list(range(i))
-    t1 = Timer("a_list[random.randrange(%d)]"%i, "from __main__ import random, a_list")
-    print(f"{i}\t{t1.timeit(number=1000)}")
+print("Size\t\tTime (Secs)")
+for i in range(1_000_000, 10_000_001, 1_000_000):
+    a_list = [1] * i
+    t1 = Timer("a_list[random.randrange(%d)]"%i, 
+               "from __main__ import random, a_list")
+    print(f"%d\t\t%2.10f"%(i, t1.timeit(number=NUMBER_OF_EXEC)))
 
 output = """
-Size            Time
-10000000        0.0007727000047452748
-20000000        0.0008559999987483025
-30000000        0.000762699986808002
-40000000        0.0008993999799713492
-50000000        0.0011965999729000032
-60000000        0.0010864000068977475
-70000000        0.000944900035392493
-80000000        0.0020558999967761338
-90000000        0.004302299988921732
-100000000       0.02330389997223392
+Size            Time (Secs)
+1000000         0.0010589920
+2000000         0.0010426140
+3000000         0.0010325370
+4000000         0.0015727720
+5000000         0.0011209170
+6000000         0.0011126440
+7000000         0.0012687110
+8000000         0.0013130280
+9000000         0.0013872810
+10000000        0.0012588040
 """
