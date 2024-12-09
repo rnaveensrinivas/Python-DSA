@@ -2,9 +2,11 @@ class Fraction:
 	def __init__(self,top,bottom):
 
 		if not isinstance(top, int):
-			raise TypeError(f"Numerator must be an integer. Provided {type(top)}")
+			raise TypeError(f"Numerator must be an integer." + 
+                   "Provided {type(top)}")
 		if not isinstance(bottom, int):
-			raise TypeError(f"Denominator must be an integer. Provided {type(bottom)}")
+			raise TypeError(f"Denominator must be an integer." + 
+                   "Provided {type(bottom)}")
 		
 		# we don't want negative denominators.
 		if bottom < 0:
