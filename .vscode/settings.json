@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./Chapter-03",
+        "./Chapter-03/Queue/PrinterSimulation"
+    ]
+}

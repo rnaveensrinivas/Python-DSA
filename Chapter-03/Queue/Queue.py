@@ -9,7 +9,7 @@ class Queue:
         return self.items.pop()
     
     def is_empty(self) -> bool:
-        return len(self.items) == 0
+        return self.size() == 0
 
     def size(self) -> int:
         return len(self.items)

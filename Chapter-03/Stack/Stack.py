@@ -6,9 +6,13 @@ class Stack:
         self.items.append(item)
         
     def pop(self) -> object:
+        if self.is_empty():
+            raise IndexError("Pop from an empty stack")
         return self.items.pop()
 
     def peek(self) -> object:
+        if self.is_empty():
+            raise IndexError("Peek from an empty stack")
         return self.items[-1]
     
     def size(self) -> int:
