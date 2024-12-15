@@ -243,7 +243,7 @@ Magic methods, also known as dunder methods (short for **double underscore**), a
 |                           | `__ne__`             | Implements inequality (`!=`).                                                                                    |
 |                           | `__gt__`             | Implements greater than (`>`).                                                                                   |
 |                           | `__ge__`             | Implements greater than or equal to (`>=`).                                                                      |
-| **Container Emulation**   | `__getitem__`         | Called to retrieve an item using the index (`obj[key]`).                                                         |
+| **Container Emulation**   | `__getitem__`         | Called to retrieve an item using the index (`obj[key]`), Also functions as slice.                                                         |
 |                           | `__setitem__`         | Called to set an item using the index (`obj[key] = value`).                                                      |
 |                           | `__delitem__`         | Called to delete an item using the index (`del obj[key]`).                                                       |
 |                           | `__len__`             | Returns the length of the object (`len(obj)`).                                                                   |
