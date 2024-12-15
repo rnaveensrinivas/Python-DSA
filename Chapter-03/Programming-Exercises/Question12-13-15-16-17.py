@@ -146,19 +146,25 @@ class UnorderedList:
             current.next = Node(data, current.next)
             self.count += 1
         
-    def __str__(self) -> str:
-        # Question 15. Implement the __str__ method in the UnorderedList class. 
-        # What would be a good string representation for a list?
-        # Question 16. Implement __str__ method so that lists are displayed 
-        # the Python way (with square brackets)
-        
+    def get_list(self) -> list[object]:
         current = self.head
         ret = []
         while current: 
             ret.append(current.data)
             current = current.next
-        return str(ret)
-
+        return ret
+        
+    def __str__(self) -> str:
+        # Question 15. Implement the __str__ method in the OrderedList class. 
+        # What would be a good string representation for a list?
+        # Question 16. Implement __str__ method so that lists are displayed 
+        # the Python way (with square brackets)
+        return str(self.get_list())
+        
+    
+    def __getitem__(self, val):
+        l = self.get_list()
+        return l[val]
 
 # Testing:
 print("1----")
@@ -353,3 +359,15 @@ ul.pop()  # Should return 10 and leave [30, 20]
 ul.pop()  # Should return 20 and leave [30]
 ul.pop()  # Should return 30 and leave the list empty
 print(ul)
+
+# 8. slicing
+print("8----")
+ul = UnorderedList()
+import random
+for i in range(10, -1, -1):
+    ul.add(i)
+print(ul)
+print(f"ul[3]: {ul[3]}")
+print(f"ul[3:6]: {ul[3:6]}")
+print(f"ul[-1]: {ul[-1]}")
+print(f"ul[::-1]: {ul[::-1]}")
