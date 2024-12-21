@@ -74,7 +74,7 @@ class LinkedList:
                 current = current.next
             
             previous.next = None
-        
+            self.tail = previous
         self.count -= 1
         
         return data
@@ -89,98 +89,129 @@ class Deque:
     def size(self) -> int:
         return self.items.size()
     
-    def enqueue(self, item: object) -> None:
+    def add_right(self, item: object) -> None:
         self.items.add_right(item)
     
-    def dequeue(self) -> object:
+    def add_left(self, item: object) -> None:
+        self.items.add_left(item)
+    
+    def remove_left(self) -> object:
         try:
             item = self.items.remove_left()
         except IndexError:
-            raise IndexError("Cannot remove from empty queue")
+            raise IndexError("Cannot remove from empty Deque")
+        return item
+    
+    def remove_right(self) -> object:
+        try:
+            item = self.items.remove_right()
+        except IndexError:
+            raise IndexError("Cannot remove from empty Deque")
         return item
 
-# Testing
-# Test cases for Queue implementation
+# Testing Deque Implementation
 
-print("Test 1: Enqueue and Dequeue basic functionality")
-q = Queue()
-q.enqueue(10)
-q.enqueue(20)
-q.enqueue(30)
-print(q.dequeue())  # Expected: 10
-print(q.dequeue())  # Expected: 20
-print(q.dequeue())  # Expected: 30
+print("Test 1: Add and Remove from Left and Right")
+d = Deque()
+d.add_left(10)
+d.add_right(20)
+d.add_left(5)
+d.add_right(25)
+print(d.remove_left())  # Expected: 5
+print(d.remove_right())  # Expected: 25
+print(d.remove_left())  # Expected: 10
+print(d.remove_right())  # Expected: 20
+print(d.is_empty())  # Expected: True (all items removed)
 print()
 
-print("Test 2: Enqueue after dequeue")
-q = Queue()
-q.enqueue(1)
-q.enqueue(2)
-print(q.dequeue())  # Expected: 1
-q.enqueue(3)
-print(q.dequeue())  # Expected: 2
-print(q.dequeue())  # Expected: 3
+print("Test 2: Add and Remove Multiple Times")
+d = Deque()
+d.add_left(1)
+d.add_right(2)
+d.add_left(0)
+d.add_right(3)
+print(d.remove_left())  # Expected: 0
+print(d.remove_right())  # Expected: 3
+print(d.remove_left())  # Expected: 1
+print(d.remove_right())  # Expected: 2
+print(d.is_empty())  # Expected: True
 print()
 
-print("Test 3: Check size after operations")
-q = Queue()
-print(q.size())  # Expected: 0 (initial size)
-q.enqueue(5)
-q.enqueue(6)
-print(q.size())  # Expected: 2
-q.dequeue()
-print(q.size())  # Expected: 1
+print("Test 3: Size after operations")
+d = Deque()
+print(d.size())  # Expected: 0 (initially empty)
+d.add_right(10)
+d.add_left(20)
+print(d.size())  # Expected: 2
+d.remove_left()
+print(d.size())  # Expected: 1
+d.remove_right()
+print(d.size())  # Expected: 0 (empty after all removals)
 print()
 
-print("Test 4: Dequeue from an empty queue")
-q = Queue()
+print("Test 4: Remove from an empty Deque")
+d = Deque()
 try:
-    q.dequeue()
+    d.remove_left()
 except IndexError as e:
-    print(e)  # Expected: "Cannot remove from empty queue"
-print()
-
-print("Test 5: Check is_empty after operations")
-q = Queue()
-print(q.is_empty())  # Expected: True (initially empty)
-q.enqueue(7)
-print(q.is_empty())  # Expected: False
-q.dequeue()
-print(q.is_empty())  # Expected: True (empty after dequeuing)
-print()
-
-print("Test 6: Enqueue a mix of data types")
-q = Queue()
-q.enqueue(42)       # Integer
-q.enqueue("hello")  # String
-q.enqueue([1, 2])   # List
-print(q.dequeue())  # Expected: 42
-print(q.dequeue())  # Expected: "hello"
-print(q.dequeue())  # Expected: [1, 2]
-print()
-
-print("Test 7: Dequeue all items and check behavior after")
-q = Queue()
-q.enqueue("A")
-q.enqueue("B")
-print(q.dequeue())  # Expected: "A"
-print(q.dequeue())  # Expected: "B"
-print(q.is_empty())  # Expected: True
+    print(e)  # Expected: "Cannot remove from empty Deque"
 try:
-    q.dequeue()
+    d.remove_right()
 except IndexError as e:
-    print(e)  # Expected: "Cannot remove from empty queue"
+    print(e)  # Expected: "Cannot remove from empty Deque"
 print()
 
-print("Test 8: Large number of operations")
-q = Queue()
+print("Test 5: Check is_empty")
+d = Deque()
+print(d.is_empty())  # Expected: True (initially empty)
+d.add_right(100)
+print(d.is_empty())  # Expected: False (after adding an item)
+d.remove_right()
+print(d.is_empty())  # Expected: True (empty after removal)
+print()
+
+print("Test 6: Mixed data types")
+d = Deque()
+d.add_right(42)       # Integer
+d.add_left("hello")  # String
+d.add_right([1, 2])   # List
+print(d.remove_left())  # Expected: "hello"
+print(d.remove_right())  # Expected: [1, 2]
+print(d.remove_left())  # Expected: 42
+print(d.is_empty())  # Expected: True
+print()
+
+print("Test 7: Large number of operations")
+d = Deque()
 for i in range(1000):
-    q.enqueue(i)
+    d.add_right(i)
 for i in range(500):
-    q.dequeue() 
-print(q.size())        # Expected: 500
+    d.remove_left()
+print(d.size())  # Expected: 500
+print(d.items.tail.data)
+for i in range(500):
+    d.remove_right()
+print(d.size())  # Expected: 0
+print(d.is_empty())  # Expected: True
+print()
 
-        
-        
-        
-        
+print("Test 8: Alternating left and right operations")
+d = Deque()
+d.add_left(1)
+d.add_right(2)
+d.add_left(0)
+d.add_right(3)
+print(d.remove_right())  # Expected: 3
+print(d.remove_left())  # Expected: 0
+print(d.remove_right())  # Expected: 2
+print(d.remove_left())  # Expected: 1
+print(d.is_empty())  # Expected: True
+print()
+
+print("Test 9: Edge cases with one item")
+d = Deque()
+d.add_left(10)
+print(d.remove_left())  # Expected: 10
+d.add_right(20)
+print(d.remove_right())  # Expected: 20
+print(d.is_empty())  # Expected: True
